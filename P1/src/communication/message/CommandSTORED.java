@@ -1,13 +1,13 @@
 package communication.message;
 
-import communication.Message;
-import communication.MessageType;
+import communication.Command;
+import communication.CommadType;
 import peer.Peer;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 
-public class MessageSTORED extends Message {
+public class CommandSTORED extends Command {
 
 
     @Override
@@ -22,7 +22,7 @@ public class MessageSTORED extends Message {
 
     @Override
     public void constructMessage() {
-        String header = MessageType.STORED + " " + VERSION;
+        String header = CommadType.STORED + " " + VERSION;
         //header += " " + chunkID.getFileID();
         //header += " " + chunkID.getChunkNo();
         header += " " + CRLF;

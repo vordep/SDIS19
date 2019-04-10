@@ -1,6 +1,6 @@
 package communication;
 
-public class MessageProtocol {
+public class CommandProtocol {
     public static int MESSAGE_TYPE = 0 ;
     public static int PROTOCOL_VERSION= 1 ;
     public static int SENDERID = 2 ;

@@ -1,6 +1,6 @@
 package handlers;
 
-import communication.MessageType;
+import communication.CommadType;
 import utils.Logger;
 
 import java.io.BufferedReader;
@@ -33,7 +33,7 @@ public class Handler implements Runnable {
 
     @Override
     public void run() {
-        this.handlerStrategy.execute();
+        this.handlerStrategy.execute(datagramPacket);
     }
 
     private void getStrategy() {
@@ -41,8 +41,9 @@ public class Handler implements Runnable {
             Logger.error("Error extracting headers of chunk ");
         }
 
-        MessageType messageType = MessageType.valueOf(headerTokens[0]);
-        switch (messageType) {
+        CommadType commadType = CommadType.valueOf(headerTokens[0]);
+//        System.out.println(commadType.toString());
+        switch (commadType) {
             case STORED:
                 this.handlerStrategy = new StoredStrategy();
                 break;
@@ -58,7 +59,7 @@ public class Handler implements Runnable {
                 new InputStreamReader(stream));
         try {
             header = reader.readLine();
-            System.out.println(header);
+
         } catch (IOException e) {
             e.printStackTrace();
             return false;

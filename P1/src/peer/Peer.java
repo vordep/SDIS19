@@ -19,8 +19,8 @@ public class Peer {
 
     private static String mcAddressName = "224.0.0.0";
 
-    private static int mcPort = 8000;
-    private static int mcbPort = 8001;
+    private static int MCPort = 8000;
+    private static int MDBPort = 8001;
     private static int mcrPort = 8002;
 
     private static Listener l;
@@ -56,11 +56,11 @@ public class Peer {
 
         try {
             addr = InetAddress.getByName(mcAddressName);
-            mcListener = new MCListener(addr, mcPort);
-            mdbListener = new MDBListener(addr,mcbPort);
+            mcListener = new MCListener(addr, MCPort);
+            mdbListener = new MDBListener(addr, MDBPort);
             new Thread(mdbListener).start();
             new Thread(mcListener).start();
-            //sendUDPMessage("STORED WORLD", "224.0.0.0", 8001);
+//            sendUDPMessage("STORED WORLD", "224.0.0.0", 8001);
             //sendUDPMessage("PUTCHUNK WORLD", "224.0.0.0", 8000);
 
         } catch (IOException e) {
@@ -71,7 +71,7 @@ public class Peer {
 
         if(file.exists()) {
             Initiator init = new Initiator(new File("../FILES/digimon.jpg"), new BackUpStrategy(new File("/Users/guedes/Desktop/SDIS/P1/P1/FILEs/digimon.jpg"), 2));
-            init.run();
+            new Thread(init).start();
         }
 
     }

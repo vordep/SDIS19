@@ -1,7 +1,7 @@
 package communication;
 
 import java.net.DatagramPacket;
-public abstract class  Message extends MessageProtocol{
+public abstract class Command extends CommandProtocol {
 
     protected DatagramPacket dataPacket;
     protected byte[] header ;

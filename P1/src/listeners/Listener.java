@@ -58,12 +58,6 @@ public abstract class Listener implements Runnable {
             try {
                 DatagramPacket data = new DatagramPacket(buffer, buffer.length);
                 socket.receive(data);
-                // to delete
-               // String msg = new String(data.getData(), data.getOffset(), data.getLength());
-                //System.out.println(msg);
-
-                //
-
                 handler(data);
 
             } catch (IOException e) {
