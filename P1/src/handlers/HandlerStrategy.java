@@ -1,8 +1,7 @@
 package handlers;
 
-import java.net.DatagramPacket;
-
 public interface HandlerStrategy {
 
-    void execute(DatagramPacket datagramPacket);
+    void execute(String[] headerTokens, byte[]body);
+
 }

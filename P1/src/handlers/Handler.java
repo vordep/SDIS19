@@ -1,6 +1,7 @@
 package handlers;
 
 import communication.CommadType;
+import communication.CommandProtocol;
 import utils.Logger;
 
 import java.io.BufferedReader;
@@ -8,6 +9,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.DatagramPacket;
+import java.util.Arrays;
 
 public class Handler implements Runnable {
 
@@ -33,7 +35,8 @@ public class Handler implements Runnable {
 
     @Override
     public void run() {
-        this.handlerStrategy.execute(datagramPacket);
+        extractBody();
+        this.handlerStrategy.execute(headerTokens,body);
     }
 
     private void getStrategy() {
@@ -67,6 +70,41 @@ public class Handler implements Runnable {
         headerTokens = header.split("[ ]+");
         return true;
     }
+    private void extractBody() {
+        /*
+         * In order to support other implementations which may use additional
+         * header lines, the correct way to extract the body is to read header
+         * lines until an empty line is read. After that, the body start
+         * position is the sum of the length of the lines read, plus the length
+         * of the <CRLF> of each line.
+         */
+        ByteArrayInputStream stream = new ByteArrayInputStream(datagramPacket.getData());
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(stream));
+
+        String line = null;
+        int headerLinesLengthSum = 0;
+        int numLines = 0;
+
+        do {
+            try {
+                line = reader.readLine();
+
+                headerLinesLengthSum += line.length();
+
+                numLines++;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } while (!line.isEmpty());
+
+        int bodyStartIndex = headerLinesLengthSum + numLines
+                * CommandProtocol.CRLF.getBytes().length;
+
+        body = Arrays.copyOfRange(datagramPacket.getData(), bodyStartIndex,
+                datagramPacket.getLength());
+    }
+
 }
 
 

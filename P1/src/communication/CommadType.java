@@ -8,13 +8,13 @@ public enum CommadType {
     REMOVED("REMOVED"),
     DELETE("DELETE");
 
-    private String messageType;
+    private String commandType;
 
-    CommadType(String messageType) {
-        this.messageType = messageType;
+    CommadType(String commandType) {
+        this.commandType = commandType;
     }
 
     public String getType() {
-        return this.messageType;
+        return this.commandType;
     }
 }

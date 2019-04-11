@@ -9,8 +9,8 @@ import static java.lang.Thread.sleep;
 
 public class ChunkStrategyAux implements Runnable {
 
-    private static final int maxTries = 5 ;
-    private static final int waitingTimeMSeconds  = 500;
+    private static final int maxTries = 5;
+    private static final int waitingTimeMSeconds = 500;
     private Chunk chunkToBackup;
 
     ChunkStrategyAux(Chunk chunkToBackup) {
@@ -25,14 +25,13 @@ public class ChunkStrategyAux implements Runnable {
         try {
             sleep(500);
             Command m = CommandFactory.getMessage(CommadType.PUTCHUNK);
-            m.constructMessage();
             m.addBody(chunkToBackup.getData());
+            m.constructMessage(chunkToBackup);
             m.send();
 
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
 
 
     }

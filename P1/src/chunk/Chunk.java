@@ -1,7 +1,7 @@
 package chunk;
 
 public class Chunk {
-    public  static int MAX_SIZE = 64000;
+    public static int MAX_SIZE = 64000;
 
     ChunkID id;
     int replicationDegree;
@@ -13,8 +13,8 @@ public class Chunk {
         this.data = data;
     }
 
-    public Chunk(String fileID,int chunkNumber,int replicationDegree, byte[] data) {
-        this.id = new ChunkID(fileID,chunkNumber);
+    public Chunk(String fileID, int chunkNumber, int replicationDegree, byte[] data) {
+        this.id = new ChunkID(fileID, chunkNumber);
         this.replicationDegree = replicationDegree;
         this.data = data;
     }

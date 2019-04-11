@@ -1,5 +1,6 @@
 package communication.message;
 
+import chunk.Chunk;
 import communication.Command;
 
 public class CommandREMOVED extends Command {
@@ -12,6 +13,11 @@ public class CommandREMOVED extends Command {
 
     @Override
     public void constructMessage() {
+
+    }
+
+    @Override
+    public void constructMessage(Chunk chunk) {
 
     }
 

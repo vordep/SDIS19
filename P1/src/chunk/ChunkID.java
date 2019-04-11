@@ -14,12 +14,12 @@ public class ChunkID {
         return fileID;
     }
 
-    public int getChunkNo() {
-        return chunkNo;
-    }
-
     public void setFileID(String fileID) {
         this.fileID = fileID;
+    }
+
+    public int getChunkNo() {
+        return chunkNo;
     }
 
     public void setChunkNo(int chunkNo) {

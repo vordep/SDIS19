@@ -28,7 +28,8 @@ public class Peer {
     private static MDBListener mdbListener;
 
     private static MulticastSocket socket;
-    private static int PeerID = 1 ;
+
+    private static int PeerID = 1;
 
 
     public static MCListener getMcListener() {
@@ -69,7 +70,7 @@ public class Peer {
 
         File file = new File("/Users/guedes/Desktop/SDIS/P1/P1/FILEs/digimon.jpg");
 
-        if(file.exists()) {
+        if (file.exists()) {
             Initiator init = new Initiator(new File("../FILES/digimon.jpg"), new BackUpStrategy(new File("/Users/guedes/Desktop/SDIS/P1/P1/FILEs/digimon.jpg"), 2));
             new Thread(init).start();
         }
@@ -89,6 +90,10 @@ public class Peer {
                 group, port);
         socket.send(packet);
 
+    }
+
+    public static int getPeerID() {
+        return PeerID;
     }
 }
 
