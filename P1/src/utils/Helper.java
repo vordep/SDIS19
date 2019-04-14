@@ -18,9 +18,9 @@ public class Helper {
     public static void randomDelay(float min, float max){
         int random = (int)(max * Math.random() + min);
         try {
-            Thread.sleep(random * 1000);
+            Thread.sleep(random );
         } catch (InterruptedException e) {
-            Logger.error("HELPER > randomDelay");
+            LOGGER.error("HELPER > randomDelay");
             e.printStackTrace();
         }
     }

@@ -5,56 +5,35 @@ import communication.CommadType;
 import communication.Command;
 import peer.Peer;
 import utils.Helper;
-import utils.Logger;
+import utils.LOGGER;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 
 public class CommandPUTCHUNK extends Command {
 
-
     @Override
-    public void send() {
-        byte[] c;
-        try {
-            c = Helper.concatByteArrays(header, body);
-            dataPacket = new DatagramPacket(c, c.length, Peer.getMdbListener().addr, Peer.getMdbListener().port);
-            Peer.getSocket().send(this.dataPacket);
-        } catch (IOException e) {
-            Logger.error("Sending PUTCHUNK to Control Multicast");
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void constructMessage(Chunk chunk) {
+    public void executeMessage(Chunk chunk) {
         String header = CommadType.PUTCHUNK + " ";
         header += VERSION + " ";
         header += Peer.getPeerID() + " ";
-        header += chunk.getId().getFileID() + " ";
-        header += chunk.getId().getChunkNo() + " ";
+        header += chunk.getChunkInfo().getFileID() + " ";
+        header += chunk.getChunkInfo().getChunkNo() + " ";
         header += chunk.getReplicationDegree()+ " ";
         header += CRLF + CRLF;
 
         this.header = header.getBytes();
-    }
+        this.body = chunk.getData();
 
-    @Override
-    public void constructMessage() {
+        byte[] messageData;
 
-        String header = CommadType.PUTCHUNK + " ";
-        header += VERSION + " ";
-        header += Peer.getPeerID();
-        //header += " " + chunkID.getFileID();
-        //header += " " + chunkID.getChunkNo();
-        header += CRLF + CRLF;
-
-
-        this.header = header.getBytes();
-    }
-
-    @Override
-    public void addBody(byte[] body) {
-        this.body = body;
+        try {
+            messageData = Helper.concatByteArrays(this.header, body);
+            dataPacket = new DatagramPacket(messageData, messageData.length, Peer.getMdbListener().addr, Peer.getMdbListener().port);
+            Peer.getSocket().send(this.dataPacket);
+        } catch (IOException e) {
+            LOGGER.error("Sending PUTCHUNK to MDB Multicast");
+            e.printStackTrace();
+        }
     }
 }

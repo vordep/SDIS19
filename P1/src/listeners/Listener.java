@@ -1,6 +1,6 @@
 package listeners;
 
-import utils.Logger;
+import utils.LOGGER;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -22,7 +22,7 @@ public abstract class Listener implements Runnable {
 
     //https://www.developer.com/java/data/how-to-multicast-using-java-sockets.html
     public void openConnection() {
-        Logger.info("Opening Multicast Socket");
+        LOGGER.info("Opening Multicast Socket");
 
         try {
             socket = new MulticastSocket(port);
@@ -35,11 +35,11 @@ public abstract class Listener implements Runnable {
     }
 
     public void closeConnection() {
-        Logger.info("Closing Multicast Socket ");
+        LOGGER.info("Closing Multicast Socket ");
         try {
             this.socket.leaveGroup(addr);
         } catch (IOException e) {
-            Logger.error("Closing Connection");
+            LOGGER.error("Closing Connection");
             e.printStackTrace();
         }
         this.socket.close();
@@ -61,7 +61,7 @@ public abstract class Listener implements Runnable {
                 handler(data);
 
             } catch (IOException e) {
-                Logger.error("Receiving packet");
+                LOGGER.error("Receiving packet");
                 e.printStackTrace();
             }
 

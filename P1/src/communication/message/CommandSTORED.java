@@ -12,39 +12,22 @@ public class CommandSTORED extends Command {
 
 
     @Override
-    public void send() {
+    public void executeMessage(Chunk chunk) {
+        String header = CommadType.STORED + " " + VERSION;
+        header += " " + Peer.getPeerID() ;
+        header += " " + chunk.getChunkInfo().getFileID();
+        header += " " + chunk.getChunkInfo().getChunkNo();
+        header += " " + CRLF;
+        header += CRLF;
+
+        this.header = header.getBytes();
+
         try {
-            this.dataPacket = new DatagramPacket(header, header.length, Peer.getMcListener().addr, Peer.getMcListener().port);
+            this.dataPacket = new DatagramPacket(this.header, this.header.length, Peer.getMcListener().addr, Peer.getMcListener().port);
             Peer.getSocket().send(this.dataPacket);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void constructMessage(Chunk chunk) {
-        String header = CommadType.STORED + " " + VERSION;
-        header += " " + chunk.getId().getFileID();
-        header += " " + chunk.getId().getChunkNo();
-        header += " " + CRLF;
-        header += CRLF;
-
-        this.header = header.getBytes();
-    }
-
-    @Override
-    public void constructMessage() {
-        String header = CommadType.STORED + " " + VERSION;
-        //header += " " + chunkID.getFileID();
-        //header += " " + chunkID.getChunkNo();
-        header += " " + CRLF;
-        header += CRLF;
-
-        this.header = header.getBytes();
-    }
-
-    @Override
-    public void addBody(byte[] body) {
-
-    }
 }

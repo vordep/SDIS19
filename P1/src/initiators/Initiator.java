@@ -10,8 +10,7 @@ public class Initiator implements Runnable {
     private int repDegree;
     private int amount;
 
-    public Initiator(File file, InitiatorStrategy strategy) {
-        this.file = file;
+    public Initiator(InitiatorStrategy strategy) {
         this.strategy = strategy;
     }
 

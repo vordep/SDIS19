@@ -1,5 +1,6 @@
 package communication;
 
+import communication.message.CommandDELETE;
 import communication.message.CommandGETCHUNK;
 import communication.message.CommandPUTCHUNK;
 import communication.message.CommandSTORED;
@@ -17,7 +18,7 @@ public class CommandFactory {
         } else if (CommadType.REMOVED.equals(type)) {
             return new CommandPUTCHUNK();
         } else if (CommadType.DELETE.equals(type)) {
-            return new CommandPUTCHUNK();
+            return new CommandDELETE();
         }
 
         return null;

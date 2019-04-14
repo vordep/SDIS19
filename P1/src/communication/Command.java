@@ -9,14 +9,8 @@ public abstract class Command extends CommandProtocol {
     protected DatagramPacket dataPacket;
     protected byte[] header;
     protected byte[] body;
-    protected CommadType type;
 
-    public abstract void send();
-
-    public abstract void constructMessage();
-    public abstract void constructMessage(Chunk chunk);
-
-    public abstract void addBody(byte[] body);
+    public abstract void executeMessage(Chunk chunk);
 
 
 }

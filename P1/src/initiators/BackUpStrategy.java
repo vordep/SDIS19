@@ -2,8 +2,9 @@ package initiators;
 
 import FILES.Manager;
 import chunk.Chunk;
-import chunk.ChunkID;
+import chunk.ChunkInfo;
 import communication.CommandProtocol;
+import utils.LOGGER;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,12 +29,12 @@ public class BackUpStrategy implements InitiatorStrategy {
 
             int nChunks = loadedData.length / CommandProtocol.BODY_MAX_SIZE + 1;
 
-//            Logger.info(file.getName() + " will be splitted into " + nChunks + " chunks.");
+            LOGGER.info(file.getName() + " will be splitted into " + nChunks + " chunks.");
 
             byte[][] chunks = Manager.splitBytes(loadedData, CommandProtocol.BODY_MAX_SIZE);
 
             for (int i = 0; i < nChunks; i++) {
-                Chunk chunk = new Chunk(new ChunkID(file.getName(), i), repDgree, chunks[i]);
+                Chunk chunk = new Chunk(new ChunkInfo(file.getName(), i), repDgree, chunks[i]);
                 Thread t = new Thread(new ChunkStrategyAux(chunk));
                 t.start();
 

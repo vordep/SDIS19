@@ -1,8 +1,7 @@
 package utils;
 
-public class Logger {
+public class LOGGER {
     public static void info(String msg) {
-        System.out.println();
         System.out.print("Info: " + msg);
         System.out.println();
     }

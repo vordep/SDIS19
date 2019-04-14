@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class Manager {
 
     public static final String BASE_PATH =System.getProperty("user.dir")+"/";
-    public static final String CHUNK_PATH = "CHUNKS//";
+    public static final String CHUNK_PATH = "CHUNKS/";
 
     public static byte[][] splitBytes(final byte[] data, final int chunkSize) {
         final int length = data.length;
@@ -30,12 +30,12 @@ public class Manager {
         return dest;
     }
 
-    public static final void saveChunk(Chunk chunk){
+    public static void saveChunk(Chunk chunk){
         if (!folderExists(BASE_PATH + "PEER" + Peer.getPeerID()+ "/" + CHUNK_PATH ));
             createFolder(BASE_PATH + "PEER" + Peer.getPeerID()+ "/" + CHUNK_PATH );
         FileOutputStream out = null;
         try {
-            out = new FileOutputStream(BASE_PATH + "PEER" + Peer.getPeerID()+ "/" + CHUNK_PATH + chunk.getId().toString());
+            out = new FileOutputStream(BASE_PATH + "PEER" + Peer.getPeerID()+ "/" + CHUNK_PATH + chunk.getChunkInfo().toString());
 
             out.write(chunk.getData());
             out.close();
@@ -45,13 +45,12 @@ public class Manager {
         }
 
     }
+
     public static boolean fileExists(String filePathString){
         File f = new File(BASE_PATH + "PEER" + Peer.getPeerID()+ "/" + CHUNK_PATH + filePathString);
-        if(f.isFile() && !f.isDirectory()) {
-            return true;
-        }
-        return false;
+        return f.isFile() && !f.isDirectory();
     }
+
     public static boolean folderExists(String name) {
         File file = new File(name);
 
@@ -62,5 +61,10 @@ public class Manager {
         File file = new File(name);
 
         boolean mkdirs = file.mkdirs();
+    }
+    public static void deleteFile(String name){
+        File f = new File(BASE_PATH + "PEER" + Peer.getPeerID()+ "/" + CHUNK_PATH + name);
+        f.delete();
+
     }
 }

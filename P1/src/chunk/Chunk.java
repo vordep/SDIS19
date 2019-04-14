@@ -3,28 +3,34 @@ package chunk;
 public class Chunk {
     public static int MAX_SIZE = 64000;
 
-    ChunkID id;
+    ChunkInfo chunkInfo;
     int replicationDegree;
     byte[] data;
 
-    public Chunk(ChunkID id, int replicationDegree, byte[] data) {
-        this.id = id;
+    public Chunk(ChunkInfo chunkInfo, int replicationDegree, byte[] data) {
+        this.chunkInfo = chunkInfo;
         this.replicationDegree = replicationDegree;
         this.data = data;
     }
 
     public Chunk(String fileID, int chunkNumber, int replicationDegree, byte[] data) {
-        this.id = new ChunkID(fileID, chunkNumber);
+        this.chunkInfo = new ChunkInfo(fileID, chunkNumber);
         this.replicationDegree = replicationDegree;
         this.data = data;
     }
-
-    public ChunkID getId() {
-        return id;
+    public Chunk(String fileID) {
+        this.chunkInfo = new ChunkInfo(fileID);
+    }
+    public Chunk(String fileID,int chunkNumber){
+        this.chunkInfo = new ChunkInfo(fileID,chunkNumber);
     }
 
-    public void setId(ChunkID id) {
-        this.id = id;
+    public ChunkInfo getChunkInfo() {
+        return chunkInfo;
+    }
+
+    public void setChunkInfo(ChunkInfo chunkInfo) {
+        this.chunkInfo = chunkInfo;
     }
 
     public int getReplicationDegree() {
